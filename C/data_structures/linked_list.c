@@ -64,11 +64,25 @@ void print_list(node *head) {
     }
 }
 
+void delete_list(node* head) {
+    node *next  = NULL;
+    node *current = head;
+    
+    while(current->next != NULL) {
+        next = current->next;
+        free(current);
+        current->next = NULL;
+        current = next;
+    }
+    //free(head);
+    head = NULL;
+}
+
 int list_menu() {
     int choice;
     printf("Choose the option:\n");
     printf("1. Create a Linked List.\n");
-    printf("2. Insert a node.\n");
+    printf("2. Insert a node(at the end).\n");
     printf("3. Delete the linked list.\n");
     printf("4. Print Linked List.\n");
     printf("5. Quit.\n");
@@ -98,6 +112,7 @@ int main(void) {
                 break;
             }
             case 3: {
+                delete_list(head);
                 printf("Linklist is deleted!!!\n");
                 printf("\n");
                 break;
