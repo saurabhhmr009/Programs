@@ -114,7 +114,40 @@ void delete_list(node* head) {
 }
 
 node* delete_node(node *head) {
-    printf("Delete");
+    node *prev, *next, *temp;
+    int point, count;
+    
+    printf("Enter the node which you want to delete: \n");
+    scanf("%d", &point);
+    count = point;
+    
+    temp = head;
+    while(count != 1) {
+        prev = temp;
+        temp = temp->next;
+        count--;
+    }
+    printf("Test\n");
+    next = temp->next;
+    prev->next = next;
+    temp->next = NULL;
+    free(temp);
+    
+    return head;
+}
+
+node* reverse_list(node* head) {
+    node *prev = NULL;
+    node* current = head;
+    node* next = NULL;
+    
+    while(current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    head = prev;
     return head;
 }
 
@@ -146,7 +179,8 @@ int list_menu() {
     printf("5. Delete a particular node\n");
     printf("6. Print Linked List.\n");
     printf("7. Print a node in the list.\n");
-    printf("8. Quit.\n");
+    printf("8. Reverse a Linked List.\n"); 
+    printf("9. Quit.\n");
     scanf("%d", &choice);
     printf("\n");
     
@@ -201,6 +235,11 @@ int main(void) {
                 break;
             }
             case 8: {
+                head = reverse_list(head);
+                printf("\n");
+                break;
+            }
+            case 9: {
                 printf("Quitting!!!\n");
                 return 0;
             }
