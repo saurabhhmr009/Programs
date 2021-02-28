@@ -1,3 +1,6 @@
+/* Program to convert the AM/PM time format into military time format.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
