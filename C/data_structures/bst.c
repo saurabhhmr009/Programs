@@ -7,7 +7,7 @@ typedef struct Node {
     struct Node *leftchild, *rightchild;
 }node;
 
-// Function to insert the node in BST
+// Function to create the node in BST
 node* create_node(int key) {
     node* temp = NULL;
     
@@ -18,11 +18,20 @@ node* create_node(int key) {
     return temp;
 }
 
-node* insert_node(node* insert) {
-    node *temp = NULL;
+// Function to insert the node in the BST.
+node* insert_node(node* insert, int key) {
+    node* temp = NULL;
 
     if(insert == NULL) {
-        printf("Create the root node first!!!\n");
+        temp = create_node(key);
+    }
+    else {
+        if(key < insert->data) {
+            insert->leftchild = insert_node(insert->leftchild, key);
+        }
+        else {
+            insert->rightchild = insert_node(insert->rightchild, key);
+        }
     }
     return temp;
 } 
@@ -40,7 +49,6 @@ node* root_node(node *temp) {
     }
     return temp;
 }
-        
 
 int bst_menu() {
     int choice;
@@ -55,27 +63,33 @@ int bst_menu() {
 
 int main(void) {
     node* root = NULL;
-    int choice;
+    int choice, data;
     
-    choice = bst_menu();
-    switch(choice) {
-        case 1: {
-            root = root_node(root);
-            printf("Root node created successfully!!!\n");
-            break;
-        }
-        case 2: {
-            root = insert_node(root);
-            printf("Node is inserted successfully!!!\n");
-            break;
-        }
-        case 3: {
-            printf("Quitting\n");
-            return 0;
-        }
-        default: {
-            printf("Wrong input!!!!\n");
-            return 1;
+    while(1) {
+        choice = bst_menu();
+        switch(choice) {
+            case 1: {
+                root = root_node(root);
+                printf("Root node created successfully!!!\n");
+                printf("\n");
+                break;
+            }
+            case 2: {
+                printf("Enter the data to be inserted in the node: \n");
+                scanf("%d", &data);
+                root = insert_node(root, data);
+                printf("Node is inserted successfully!!!\n");
+                printf("\n");
+                break;
+            }
+            case 3: {
+                printf("Quitting\n");
+                return 0;
+            }
+            default: {
+                printf("Wrong input!!!!\n");
+                return 1;
+            }
         }
     }
     return 0;
