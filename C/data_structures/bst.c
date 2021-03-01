@@ -7,10 +7,32 @@ typedef struct Node {
     struct Node *leftchild, *rightchild;
 }node;
 
+// Calculate the depth of a BST.
+int calculate_depth(node *root) {
+    int left_height, right_height;
+    int depth;
+    if(root == NULL) {
+        return -1;
+    }
+    else {
+        left_height = calculate_depth(root->leftchild);
+        right_height = calculate_depth(root->rightchild);
+
+        if(left_height > right_height) {
+            depth = left_height + 1;
+            //printf("Left %d\n", depth);
+        }
+        else {
+            depth = right_height + 1;
+            //printf("Right %d\n", depth);
+        }
+    }
+    return depth;
+}
+
 // Function to create the node in BST
 node* create_node(int key) {
     node* temp = NULL;
-    
     temp = (node*)malloc(sizeof(node));
     temp->data = key;
     temp->leftchild = NULL;
@@ -24,6 +46,7 @@ node* insert_node(node* insert, int key) {
 
     if(insert == NULL) {
         temp = create_node(key);
+        return temp;
     }
     else {
         if(key < insert->data) {
@@ -33,8 +56,8 @@ node* insert_node(node* insert, int key) {
             insert->rightchild = insert_node(insert->rightchild, key);
         }
     }
-    return temp;
-} 
+    return insert;
+}
 
 // Function to create the root node of the BST.
 node* root_node(node *temp) {
@@ -50,11 +73,13 @@ node* root_node(node *temp) {
     return temp;
 }
 
+// BST menu to be displayed.
 int bst_menu() {
     int choice;
-    printf("1. Create the root of the Tree.\n");
-    printf("2. Insert the node in the Tree.\n");
-    printf("3: Quit.\n");
+    printf("1. Create the root of the BST.\n");
+    printf("2. Insert the node in the BST.\n");
+    printf("3. Print\n");
+    printf("4: Quit.\n");
     printf("Enter the operation to be perfomed on the BST: \n");
     scanf("%d", &choice);
     printf("\n");
@@ -63,7 +88,7 @@ int bst_menu() {
 
 int main(void) {
     node* root = NULL;
-    int choice, data;
+    int choice, data, depth = 0;
     
     while(1) {
         choice = bst_menu();
@@ -83,6 +108,11 @@ int main(void) {
                 break;
             }
             case 3: {
+                depth = calculate_depth(root);
+                printf("Depth of the BST is %d\n", depth);
+                break;
+            }
+            case 4: {
                 printf("Quitting\n");
                 return 0;
             }
