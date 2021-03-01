@@ -8,25 +8,35 @@ typedef struct Node {
 }node;
 
 // Function to insert the node in BST
-node* insert_node(node *create) {
-    int data;
-    printf("Enter the node data: \n");
-    scanf("%d", &data);
-    create = (node*)malloc(sizeof(node));
-    create->data = data;
-    create->leftchild = NULL;
-    create->rightchild = NULL;
-    return create;
+node* create_node(int key) {
+    node* temp = NULL;
+    
+    temp = (node*)malloc(sizeof(node));
+    temp->data = key;
+    temp->leftchild = NULL;
+    temp->rightchild = NULL;
+    return temp;
 }
 
-// Function to create the root node of the BST.
-node* root_node(node *top) {
+node* insert_node(node* insert) {
     node *temp = NULL;
-    if(top !=  NULL) {
+
+    if(insert == NULL) {
+        printf("Create the root node first!!!\n");
+    }
+    return temp;
+} 
+
+// Function to create the root node of the BST.
+node* root_node(node *temp) {
+    int data;
+    if(temp !=  NULL) {
         printf("The root node is already created.\n");
     }
     else {
-        temp = insert_node(top);
+        printf("Enter the node data: \n");
+        scanf("%d", &data);
+        temp = create_node(data);
     }
     return temp;
 }
