@@ -7,6 +7,20 @@ typedef struct Node {
     struct Node *leftchild, *rightchild;
 }node;
 
+// Function to print nodes in the Breadth level manner.
+void breadth_level(node* root, int level) {
+    if(root == NULL) {
+        return;
+    }
+    if(level == 1) {
+        printf("%d\n", root->data);
+    }
+    else if(level > 1) {
+        breadth_level(root->leftchild, level -1);
+        breadth_level(root->rightchild, level - 1);
+    }
+}
+
 // Calculate the depth of a BST.
 int calculate_depth(node *root) {
     int left_height, right_height;
@@ -78,8 +92,9 @@ int bst_menu() {
     int choice;
     printf("1. Create the root of the BST.\n");
     printf("2. Insert the node in the BST.\n");
-    printf("3. Print\n");
-    printf("4: Quit.\n");
+    printf("3. Calculate the Depth of the BST.\n");
+    printf("4. Print the nodes in Breadth/ Level search manner.\n");
+    printf("5: Quit.\n");
     printf("Enter the operation to be perfomed on the BST: \n");
     scanf("%d", &choice);
     printf("\n");
@@ -88,7 +103,7 @@ int bst_menu() {
 
 int main(void) {
     node* root = NULL;
-    int choice, data, depth = 0;
+    int choice, data, i, depth = 0;
     
     while(1) {
         choice = bst_menu();
@@ -113,6 +128,14 @@ int main(void) {
                 break;
             }
             case 4: {
+                depth = calculate_depth(root);
+                for(i=1; i<=depth+1; i++) {
+                    //printf("%d\n", depth);
+                    breadth_level(root, i);
+                }
+                break;
+            }
+            case 5: {
                 printf("Quitting\n");
                 return 0;
             }
