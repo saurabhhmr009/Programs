@@ -1,3 +1,8 @@
+/* Program to construct a Binary search tree in C. Functions used till now is
+ * create root, insert node, Breadth level transverse.
+ * Inorder transverse, pre order transverse and post order transverse.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -7,13 +12,50 @@ typedef struct Node {
     struct Node *leftchild, *rightchild;
 }node;
 
+/* Function to traverse BST in INORDER manner.
+ * Procedure :  Traverse the left subtree and print node.
+ * Visit Root node and print.
+ * Traverse the right subtree.
+ */
+void print_inorder(node* root) {
+    if(root == NULL) {
+        return;
+    }
+    print_inorder(root->leftchild);
+    printf("%d ", root->data);
+    print_inorder(root->rightchild);
+
+}
+
+// Function to traverse in the Preorder manner in BST.
+// Procedure: Print root, traverse left, traverse right.
+void print_preorder(node *root) {
+    if(root == NULL) {
+        return;
+    }
+    printf("%d ", root->data);
+    print_preorder(root->leftchild);
+    print_preorder(root->rightchild);
+
+}
+
+// Function to traverse in the POST order manner in BST.
+void print_postorder(node* root) {
+    if(root == NULL) {
+        return;
+    }
+    print_postorder(root->leftchild);
+    print_postorder(root->rightchild);
+    printf("%d ", root->data);
+}
+
 // Function to print nodes in the Breadth level manner.
 void breadth_level(node* root, int level) {
     if(root == NULL) {
         return;
     }
     if(level == 1) {
-        printf("%d\n", root->data);
+        printf("%d ", root->data);
     }
     else if(level > 1) {
         breadth_level(root->leftchild, level -1);
@@ -94,7 +136,10 @@ int bst_menu() {
     printf("2. Insert the node in the BST.\n");
     printf("3. Calculate the Depth of the BST.\n");
     printf("4. Print the nodes in Breadth/ Level search manner.\n");
-    printf("5: Quit.\n");
+    printf("5. Traverse the nodes in the Inorder manner.\n");
+    printf("6. Traverse the nodes in the Preorder manner.\n");
+    printf("7. Traverse the nodes in the postorder manner.\n");
+    printf("8: Quit.\n");
     printf("Enter the operation to be perfomed on the BST: \n");
     scanf("%d", &choice);
     printf("\n");
@@ -133,9 +178,25 @@ int main(void) {
                     //printf("%d\n", depth);
                     breadth_level(root, i);
                 }
+                printf("\n");
                 break;
             }
             case 5: {
+                print_inorder(root);
+                printf("\n");
+                break;
+            }
+            case 6: {
+                print_preorder(root);
+                printf("\n");
+                break;
+            }
+            case 7: {
+                print_postorder(root);
+                printf("\n");
+                break;
+            }
+            case 8: {
                 printf("Quitting\n");
                 return 0;
             }
