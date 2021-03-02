@@ -12,6 +12,26 @@ typedef struct Node {
     struct Node *leftchild, *rightchild;
 }node;
 
+// Delete a BST using the Post order traversal method.
+node* delete_nodes(node* root) {
+    if(root == NULL) {
+        return root;
+    }
+    delete_nodes(root->leftchild);
+    delete_nodes(root->rightchild);
+
+    free(root);
+    root = NULL;
+    return root;
+}
+
+void delete_root(node* root) {
+    free(root->leftchild);
+    free(root->rightchild);
+    free(root);
+    root = NULL;
+}
+
 /* Function to traverse BST in INORDER manner.
  * Procedure :  Traverse the left subtree and print node.
  * Visit Root node and print.
@@ -139,7 +159,8 @@ int bst_menu() {
     printf("5. Traverse the nodes in the Inorder manner.\n");
     printf("6. Traverse the nodes in the Preorder manner.\n");
     printf("7. Traverse the nodes in the postorder manner.\n");
-    printf("8: Quit.\n");
+    printf("8. Delete the whole BST.\n");
+    printf("9: Quit.\n");
     printf("Enter the operation to be perfomed on the BST: \n");
     scanf("%d", &choice);
     printf("\n");
@@ -197,6 +218,11 @@ int main(void) {
                 break;
             }
             case 8: {
+                root = delete_nodes(root);
+                printf("Tree Deleted!!!\n");
+                break;
+            }
+            case 9: {
                 printf("Quitting\n");
                 return 0;
             }
