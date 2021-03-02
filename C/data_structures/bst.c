@@ -25,6 +25,7 @@ node* delete_nodes(node* root) {
     return root;
 }
 
+// Get the minimum value of the left most leaf.
 node* getMinNode(node* min)
 {
     node* current = min;
@@ -35,16 +36,20 @@ node* getMinNode(node* min)
     return current;
 }
 
+// Delete the node according to the key entered in BST menu.
 node *delete_key(node* root, int key) {
     if(root == NULL) {
         return root;
     }
+    // check if key is less than root node, go left.
     if(key < root->data) {
         root->leftchild = delete_key(root->leftchild, key);
     }
+    // else  go right.
     else if(key > root->data) {
         root-> rightchild = delete_key(root->rightchild, key);
     }
+    // Check for the one node root.
     else {
         if(root->leftchild == NULL) {
             node* temp = root->rightchild;
