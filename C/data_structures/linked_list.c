@@ -10,6 +10,33 @@ typedef struct Node {
     struct Node *next;
 }node;
 
+node* delete_duplicate(node *head) {
+    node *head1 = NULL, *traverse = NULL, *temp = NULL;
+    if(head == NULL) {
+        printf("Linked list is empty.\n");
+        return head;
+    }
+    
+    head1 = head;
+    if((head1 != NULL) && (head1->next != NULL)) {
+        traverse = head1;
+        while(traverse->next != NULL) {
+            if(head1->data == traverse->next->data) {
+                 temp = traverse->next;
+                 traverse->next = traverse->next->next;
+                 free(temp);
+                 temp = NULL;
+             }
+             else {
+                 traverse = traverse->next;
+             }
+         }
+         head1 = head1->next;
+     }
+     return head;
+}
+
+
 // Function to create the head node of the Linked List.
 node* create_node(node *head) {
     int value;
@@ -179,8 +206,9 @@ int list_menu() {
     printf("5. Delete a particular node\n");
     printf("6. Print Linked List.\n");
     printf("7. Print a node in the list.\n");
-    printf("8. Reverse a Linked List.\n"); 
-    printf("9. Quit.\n");
+    printf("8. Reverse a Linked List.\n");
+    printf("9. Remove the duplicates. \n"); 
+    printf("10. Quit.\n");
     scanf("%d", &choice);
     printf("\n");
     
@@ -190,7 +218,7 @@ int list_menu() {
 int main(void) {
     node *head = NULL;
     int choice;
-    
+
     while(1) {
         choice = list_menu();
         switch(choice) {
@@ -240,6 +268,10 @@ int main(void) {
                 break;
             }
             case 9: {
+                head = delete_duplicate(head);
+                break;
+            }
+            case 10: {
                 printf("Quitting!!!\n");
                 return 0;
             }
