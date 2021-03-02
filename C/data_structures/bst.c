@@ -25,11 +25,44 @@ node* delete_nodes(node* root) {
     return root;
 }
 
-void delete_root(node* root) {
-    free(root->leftchild);
-    free(root->rightchild);
-    free(root);
-    root = NULL;
+node* getMinNode(node* min)
+{
+    node* current = min;
+ 
+    /* loop down to find the leftmost leaf */
+    while (current && current->leftchild != NULL)
+        current = current->leftchild;
+    return current;
+}
+
+node *delete_key(node* root, int key) {
+    if(root == NULL) {
+        return root;
+    }
+    if(key < root->data) {
+        root->leftchild = delete_key(root->leftchild, key);
+    }
+    else if(key > root->data) {
+        root-> rightchild = delete_key(root->rightchild, key);
+    }
+    else {
+        if(root->leftchild == NULL) {
+            node* temp = root->rightchild;
+            free(root);
+            root = NULL;
+            return temp;
+        }
+        else if(root-> rightchild == NULL) {
+            node *temp = root->leftchild;
+            free(root);
+            root = NULL;
+            return temp;
+        }
+        node *temp = getMinNode(root->rightchild);
+        root->data = temp->data;
+        root->rightchild = delete_key(root->rightchild, temp->data);
+    }
+    return root;
 }
 
 /* Function to traverse BST in INORDER manner.
@@ -160,7 +193,8 @@ int bst_menu() {
     printf("6. Traverse the nodes in the Preorder manner.\n");
     printf("7. Traverse the nodes in the postorder manner.\n");
     printf("8. Delete the whole BST.\n");
-    printf("9: Quit.\n");
+    printf("9. Delete the node according to a particular key in BST.\n");
+    printf("10: Quit.\n");
     printf("Enter the operation to be perfomed on the BST: \n");
     scanf("%d", &choice);
     printf("\n");
@@ -223,6 +257,13 @@ int main(void) {
                 break;
             }
             case 9: {
+                int delete;
+                printf("Enter the key node to be deleted:\n");
+                scanf("%d", &delete);
+                root = delete_key(root, delete);
+                break;
+            }
+            case 10: {
                 printf("Quitting\n");
                 return 0;
             }
