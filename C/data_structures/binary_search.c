@@ -3,6 +3,7 @@
 
 int binary_search(int left, int right, int *arr, int num) {
     int mid_index;
+    printf("%d %d\n", left, right);
     if(left >= right) {
         mid_index = left + (right-left)/2;
         if(*(arr+mid_index) == num) {
