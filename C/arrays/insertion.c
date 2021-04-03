@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 int* insertion(int *arr, int *length);
+int* deletion(int *arr, int *length);
 
 int main(void) {
     int *arr = NULL;
@@ -21,10 +22,13 @@ int main(void) {
         scanf("%d", arr+i);
     }
 
-    if(insertion(arr, length) == NULL) {
+    /*if(insertion(arr, length) == NULL) {
+        return -1;
+    }*/
+    if(deletion(arr, length) == NULL) {
         return -1;
     }
-    else{
+    else {
         for(i=0; i<*length; i++) {
             printf("%d ", *(arr+i));
         }
@@ -58,4 +62,25 @@ int* insertion(int *arr, int *length) {
     *(arr+position) = data;
 
     return arr; 
+}
+
+int* deletion(int *arr, int *length) {
+    int position, i;
+
+    printf("Enter the location/index which you want to delete: \n");
+    scanf("%d", &position);
+
+    if((position < 0) ||(position > *length -1)) {
+        printf("Invalid index.\n");
+        return NULL;
+    }
+
+    for(i=position; i<*length-1; i++){
+        *(arr+i) = *(arr+i+1);
+    }
+
+    *length -= 1;
+
+    arr = (int*)realloc(arr, *length);
+    return arr;
 }
