@@ -69,6 +69,14 @@ Node* insert_beg(Node* start) {
     return new_node;
 }
 
+// Deletes the node at the begining of the list.
+Node* delete_beg(Node *start) {
+    last->next = start->next;
+    start->next = NULL;
+    free(start);
+    return last->next;
+}
+
 // Inserts the node at the end of the list.
 Node* insert_end(Node *start) {
     int data;
@@ -81,6 +89,38 @@ Node* insert_end(Node *start) {
     last->next = new_node;
     new_node->next = start;
     last = new_node;
+    return start;
+}
+
+Node* delete_end(Node *start) {
+    Node *temp = start, *prev;
+    do {
+        prev = temp;
+        temp = temp->next;
+    }
+    while(temp != last);
+    prev->next = last->next;
+    last = prev;
+    temp->next = NULL;
+    free(temp);
+    return last->next;
+}
+
+// Deletes the next node which matches the item.
+Node* delete_mid(Node *start) {
+    Node *temp = last->next, *extra;
+    int item;
+
+    printf("Enter the item after which you want to delete the node: \n");
+    scanf("%d", &item);
+
+    while(temp->data != item) {
+        temp = temp->next;
+    }
+    extra = temp->next;
+    temp->next = temp->next->next;
+    extra->next = NULL;
+    free(extra);
     return start;
 }
 
@@ -121,14 +161,17 @@ void print_list(Node *start) {
 int main(void) {
     Node *start = NULL;
 
+    // Creates the head node
     start = create_head(start);
 
+    // Adds node to the list.
     start = create_node(start);
     start = create_node(start);
     start = create_node(start);
     start = create_node(start);
-
     print_list(start);
+
+    // Insert operations in the Circular linked list.
     start = insert_beg(start);
     print_list(start);
     start = insert_end(start);
@@ -136,5 +179,13 @@ int main(void) {
     start = insert_mid(start);
     print_list(start);
 
-    return 0;   
+    // Delete operations in the Circular linked list.
+    start = delete_beg(start);
+    print_list(start);
+    start = delete_end(start);
+    print_list(start);
+    start = delete_mid(start);
+    print_list(start);
+
+    return 0;
 }
