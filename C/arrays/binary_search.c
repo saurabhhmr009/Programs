@@ -26,12 +26,10 @@ int binary_search(int *arr, int start, int end, int data) {
         }
 
         if(*(arr+mid) > data) {
-            printf("In\n");
             end = mid -1;
             return binary_search(arr, start, end, data);
         }
         else {
-            printf("Out\n");
             start = mid+1;
             return binary_search(arr, start, end, data);
         }
