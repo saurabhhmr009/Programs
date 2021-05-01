@@ -1,0 +1,11 @@
+    if(head->next == NULL) {
+        printf("%d -> NULL\n", head->data);
+    }
+    else {
+        p = head->next;
+        while(p->next != NULL) {
+            printf("%d -> ", head->data);
+            p = p->next;
+        }
+        printf("->NULL\n");
+    }
