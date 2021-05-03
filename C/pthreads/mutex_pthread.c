@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#define NUM_LOOPS 50000000
 
 long long sum;
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void* summation(void *arg) {
     long long number = *(long long*)arg;
@@ -12,12 +14,16 @@ void* summation(void *arg) {
     answer = malloc(sizeof(*answer));
     free(arg);
     arg = NULL;
-
-    for(i=1; i<=number; i++) {
-        sum += i;
+    pthread_mutex_lock(&mutex);
+    for(i=1; i<=NUM_LOOPS; i++) {
+        
+        sum += number;
+        
     }
 
     *answer = sum;
+    pthread_mutex_unlock(&mutex);
+
     //printf("%lld\n", number); 
     pthread_exit(answer);
     free(answer);
