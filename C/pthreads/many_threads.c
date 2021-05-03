@@ -16,7 +16,7 @@ void* summation(void *arg) {
         sum += i;
     }
     arg_struct->sum = sum;
-    printf("pthread id is %ld\n", pthread_self());
+    //printf("pthread id is %ld\n", pthread_self());
     /* Status could be 0 or NULL */
     pthread_exit(NULL);
 }
@@ -36,13 +36,13 @@ int main (int argc, char **argv) {
         pthread_attr_init(&attr);
         args[i].num = number; 
         pthread_create(&thread_ids[i], &attr, summation, &args[i]);
-        printf("+++++++\n");
     }
 
     for(int i=0; i<total_arg; i++) {
         pthread_join(thread_ids[i], NULL);
-        printf("Sum is %lld\n", args[i].sum);
+        printf("pthread id is %ld and sum is %lld\n", thread_ids[i], args[i].sum);
     }
 
+    printf("++++++++\n");
     return 0;
 }
