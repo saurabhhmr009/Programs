@@ -1,4 +1,10 @@
-#include "headers.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
 
 int main(int argc, char **argv) {
     int sockfd, new_sockfd, port_num, check, enable = 1;
@@ -64,7 +70,7 @@ int main(int argc, char **argv) {
 
         memset(buffer, 0, 255);
         fgets(buffer, 255, stdin);
-        check = write(new_sockfd, buffer, 255);
+        check = write(new_sockfd, buffer, strlen(buffer));
         if(check < 0) {
             perror("Error in writing\n");
         }
