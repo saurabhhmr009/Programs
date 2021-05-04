@@ -63,6 +63,7 @@ int main(int argc, char **argv) {
         printf("Client: %s\n", buffer);
 
         memset(buffer, 0, 255);
+        fgets(buffer, 255, stdin);
         check = write(new_sockfd, buffer, 255);
         if(check < 0) {
             perror("Error in writing\n");
