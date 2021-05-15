@@ -34,11 +34,9 @@ int myAtoi(char *s) {
     }
 
     //printf("%ld\n", result);
-    if(result > INT_MAX && sign == 0) {
-        return INT_MAX;
-    }
-    if(result < INT_MIN && sign == 1) {
-        return INT_MIN;
+    if(result > INT_MAX)
+    {
+        return sign == 0 ? INT_MAX : INT_MIN;
     }
 
     return sign == 0 ? result : -result;
