@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int k = 0;
+#define HASHSIZE 1000
+/*int k = 0;
 
 int cmpFunc(const void *a, const void *b) {
     return (*(int*)a - *(int*)b);
@@ -43,6 +44,33 @@ int* intersect(int *nums1, int nums1Size, int *nums2, int nums2Size) {
     }
 
     return result_arr;
+}*/
+
+int* intersection(int* nums1, int nums1Size, int* nums2, int nums2Size, int* returnSize){
+    int *hash_arr = NULL, *ret_arr = NULL, i = 0, j = 0, ret_size, key;
+
+    hash_arr = (int*)calloc(HASHSIZE, sizeof(int));
+    ret_size = nums1Size < nums2Size ? nums1Size:nums2Size;
+    ret_arr = (int*)malloc(ret_size*sizeof(int));
+
+    while(i < nums1Size) {
+        key = get_hash(nums1[i]);
+        hash_arr[key] += 1;
+        i++;
+    }
+
+    i = 0;
+    while(i < nums2Size) {
+        key = get_hash(nums2[i]);
+        if(hash_arr[key] > 0) {
+            ret_arr[j] = key;
+            hash_arr[key] = 0;
+            j++;
+        }
+        i++;
+    }
+    *returnSize = j;
+    return ret_arr;
 }
 
 
